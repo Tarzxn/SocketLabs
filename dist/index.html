@@ -59,11 +59,25 @@ dialog.library-open{width:min(1140px,96vw);max-height:94dvh;padding:22px;backgro
 .library-open #results img{width:100%;height:110px;object-fit:contain}.library-open #results button{align-self:start}
 .library-open details{margin-top:9px}.library-open summary{padding:0;font-size:12px}.library-open #filters{gap:8px}
 @media(max-width:680px){.library-open #library-shell{display:block}.library-open #library-nav{flex-direction:row;overflow-x:auto;margin-bottom:12px;border:0}#library-nav button{white-space:nowrap;gap:5px}.library-open #filters>*{width:auto}.library-open #filters input#search{width:100%}.library-open #results{max-height:42vh}header{gap:6px}}
+</style><style>
+main{max-width:1640px;padding:22px clamp(12px,2vw,36px) 36px}.studio-top,.stage-head{display:flex;align-items:center;justify-content:space-between;gap:16px}.studio-top{margin-bottom:16px}.studio-top h1{font-size:clamp(24px,3vw,38px);margin:0}.studio-top .builder-tools{margin:0}.studio-top .build-name label{display:none}
+.studio{display:grid;grid-template-columns:minmax(0,1fr) clamp(330px,31vw,460px);gap:14px;align-items:stretch}
+.stage,.parts-rail{border:1px solid var(--line);border-radius:16px;background:var(--surface);min-width:0}.stage{padding:18px;display:flex;flex-direction:column}.stage-head h2{margin:0}.view-area{display:flex;flex:1;min-height:0;flex-direction:column;align-items:center;justify-content:center}
+#assembly{background:radial-gradient(ellipse at center,#fffdf6,#f2e8d9);width:100%;height:clamp(330px,56vh,660px);object-fit:contain}.preview-tools{width:min(320px,85%)}.parts-rail{height:clamp(510px,72vh,850px);overflow:auto}.slots{padding:18px}
+#build .row,#optional .row{grid-template-columns:1fr auto;gap:3px 8px;padding:11px 0}#build .row>strong,#optional .row>strong{grid-column:1/-1}.parts-rail:has(.library-open[open]) .slots{display:none}
+dialog.library-open[open]{display:block;position:static;margin:0;width:100%;max-width:none;max-height:none;border:0;box-shadow:none;padding:16px;background:var(--surface)}
+.library-open #library-shell{display:block}.library-open #library-nav{flex-direction:row;max-height:none;overflow-x:auto;border:0;gap:4px;padding:0 0 6px}.library-open #library-nav button{white-space:nowrap;gap:4px}
+.library-open #results{max-height:none;grid-template-columns:repeat(auto-fit,minmax(min(165px,100%),1fr))}#filters #search{flex-basis:100%}.build-summary{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.stage model-viewer{width:100%;height:52vh}
+@media(max-width:840px){.studio{grid-template-columns:minmax(0,1fr) minmax(285px,40%)}}
+@media(max-width:680px){.studio,.build-summary{grid-template-columns:1fr}.studio-top{align-items:flex-start;flex-direction:column}.parts-rail{height:auto;max-height:70vh}#assembly{height:32vh;min-height:210px}.stage model-viewer{height:32vh}.stage{padding:12px}main{padding-bottom:70px}}
 </style><header><strong><span class="brand-mark" aria-hidden="true">⌬</span>Socket Labs</strong><button id="library">Parts library</button><button id="saved">Saved builds</button></header><main>
-<h1>Build your PC</h1><p>Choose components for your build.</p><div class="layout"><section class="panel"><h2>Components</h2>
-<div class="builder-tools"><div class="build-name"><label for="name">Build name</label><input id="name" value="Untitled build" maxlength="90"></div>
+<div class="studio-top"><h1>Assembly studio</h1><div class="builder-tools"><div class="build-name"><label for="name">Build name</label><input id="name" value="Untitled build" maxlength="90"></div>
 <div class="actions"><button id="preset">Example build</button><button id="reset">New build</button></div></div>
-<p id="notice" role="status"></p><div id="build"></div><details><summary id="optional-label">Accessories and peripherals</summary><div id="optional"></div></details></section><aside><section class="panel"><h2>Assembly preview</h2><canvas id="assembly" width="560" height="420" aria-label="Rotatable schematic PC assembly"></canvas><div class="preview-tools"><label for="orbit">Rotate</label><input id="orbit" type="range" min="-165" max="165" value="-26"></div><small id="model-note">Choose a component to preview its approximate shape.</small></section><section class="panel"><h2>Build total</h2><div class="amount" id="total"></div><p><span id="price-note"></span></p><div class="actions"><button id="save" class="primary">Save build</button><button id="share">Copy share link</button><button id="export">Export CSV</button></div></section><section class="panel"><h2>Compatibility</h2><ul id="checks"></ul></section></aside></div><footer><a href="https://github.com/docyx/pc-part-dataset/tree/c52a04c">July 2025 PC parts snapshot</a> by docyx, adapted for Socket Labs. Additional catalogue data adapted from <a href="https://github.com/iBlessi/pc-builder-parts">TechFuel HQ PC Builder Parts</a> under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Socket Labs maps the original specs to its picker and compatibility checks.</footer><div class="mobile-total">Build total <strong id="mobile-total"></strong></div></main><dialog id="modal" aria-labelledby="title"><form method="dialog"><button style="float:right">Close</button></form><h2 id="title"></h2><div id="library-shell"><nav id="library-nav" aria-label="Component categories"></nav><div class="library-main"><div id="filters" class="actions"><input id="search" placeholder="Search model or spec" aria-label="Search model or spec"><select id="sort" aria-label="Sort parts"><option value="price">Price low to high</option><option value="name">Model name</option></select><select id="facet" aria-label="Filter specification"></select><label><input type="checkbox" id="model-only"> Blender models</label><label><input type="checkbox" id="compatible"> Hide known conflicts</label></div><div id="results"></div><div class="actions" id="page"></div></div></div></dialog><script src="/snapshot.js"></script><script src="/preview.js"></script><script src="/catalogue.js"></script><script>
+</div><p id="notice" role="status"></p>
+<div class="studio"><section class="stage"><div class="stage-head"><h2 id="view-title">Assembly</h2><button id="reset-view">Reset view</button></div>
+<div class="view-area"><canvas id="assembly" width="560" height="420" aria-label="Rotatable schematic PC assembly"></canvas><div class="preview-tools"><label for="orbit">Rotate</label><input id="orbit" type="range" min="-165" max="165" value="-26"></div><small id="model-note">Choose a component to preview its approximate shape.</small></div><div id="asset-pane" hidden><model-viewer id="asset" camera-controls touch-action="pan-y" shadow-intensity="1"></model-viewer><button id="back-view">Back to assembly</button></div></section>
+<aside class="parts-rail"><section class="slots"><h2>Build components</h2><div id="build"></div><details><summary id="optional-label">Accessories and peripherals</summary><div id="optional"></div></details></section><dialog id="modal" aria-labelledby="title"><form method="dialog"><button style="float:right">Close</button></form><h2 id="title"></h2><div id="library-shell"><nav id="library-nav" aria-label="Component categories"></nav><div class="library-main"><div id="filters" class="actions"><input id="search" placeholder="Search model or spec" aria-label="Search model or spec"><select id="sort" aria-label="Sort parts"><option value="price">Price low to high</option><option value="name">Model name</option></select><select id="facet" aria-label="Filter specification"></select><label><input type="checkbox" id="model-only"> Blender models</label><label><input type="checkbox" id="compatible"> Hide known conflicts</label></div><div id="results"></div><div class="actions" id="page"></div></div></div></dialog></aside></div>
+<div class="build-summary"><section class="panel"><h2>Build total</h2><div class="amount" id="total"></div><p><span id="price-note"></span></p><div class="actions"><button id="save" class="primary">Save build</button><button id="share">Copy share link</button><button id="export">Export CSV</button></div></section><section class="panel"><h2>Compatibility</h2><ul id="checks"></ul></section></div><footer><a href="https://github.com/docyx/pc-part-dataset/tree/c52a04c">July 2025 PC parts snapshot</a> by docyx, adapted for Socket Labs. Additional catalogue data adapted from <a href="https://github.com/iBlessi/pc-builder-parts">TechFuel HQ PC Builder Parts</a> under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Socket Labs maps the original specs to its picker and compatibility checks.</footer><div class="mobile-total">Build total <strong id="mobile-total"></strong></div></main><script src="/snapshot.js"></script><script src="/preview.js"></script><script src="/catalogue.js"></script><script>
 const categories=globalThis.snapshotCategories;
 const rows=[
 [0,'AMD Ryzen 5 7600',170,{socket:'AM5',w:65}], [0,'Intel Core i5-12400F',110,{socket:'LGA1700',w:65}],
@@ -185,7 +199,7 @@ function openPicker(category,index=null){
  const label=(facetKeys[filter]??'type').replaceAll('_',' ');
  $('facet').replaceChildren(...['',...options].map(value=>{const option=node('option',value||'All · '+label);option.value=value;return option}));
  $('facet').value='';$('facet').hidden=!options.length;
- $('filters').style.display='flex'; $('search').value=''; list(); if(!$('modal').open)$('modal').showModal(); $('search').focus();
+ $('filters').style.display='flex'; $('search').value=''; list(); if(!$('modal').open)$('modal').show(); $('search').focus();
 }
 function list(){
  const terms=$('search').value.toLowerCase().trim().split(/\s+/);
@@ -214,6 +228,7 @@ function list(){
      const source=node('a','Specifications source');source.href=part.source;source.target='_blank';source.rel='noopener noreferrer';desc.append(node('small',''));
      desc.lastChild.append(source);
    }
+   if(modelIds.has(String(part.id)))desc.append(button('View model',()=>inspectAsset(part)));
    const selected=(driveIndex===null?ids[filter]:drives[driveIndex])===part.id;
    const add=button(selected?'Selected':'Add',()=>{if(driveIndex===null)ids[filter]=part.id;else drives[driveIndex]=part.id;$('modal').close();render()});
    add.className='primary'; add.disabled=selected;row.append(desc,add);return row;
@@ -225,6 +240,21 @@ function list(){
  $('page').replaceChildren(node('span',matches.length? (start+1)+'–'+Math.min(start+pageSize,matches.length)+' of '+matches.length+' parts':'0 parts'),prev,next);
 }
 const ruleCategories=[[0,2],[0,1],[2,3],[2,4],[2,6],[5,6],[1,6],[6,7],[5,7]];
+function assemblyView(){
+ document.querySelector('.view-area').hidden=false;
+ document.querySelector('.view-area').style.display='';
+ $('asset-pane').hidden=true;$('view-title').textContent='Assembly';
+}
+async function inspectAsset(part){
+ try{
+   if(!customElements.get('model-viewer'))await import('https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.min.js');
+   $('asset').src='/models/'+encodeURIComponent(part.id)+'.glb';$('asset').alt=part.name;
+   document.querySelector('.view-area').style.display='none';$('asset-pane').hidden=false;$('view-title').textContent=part.name;
+ }catch{notify('The 3D viewer could not load.')}
+}
+$('asset').addEventListener('error',()=>{assemblyView();notify('This model could not be opened.')});
+$('reset-view').onclick=()=>{assemblyView();$('orbit').value='-26';render()};
+$('back-view').onclick=assemblyView;
 $('library').onclick=()=>openPicker(0);
 $('facet').onchange=$('model-only').onchange=$('search').oninput=$('sort').onchange=$('compatible').onchange=()=>{page=0;list()};
 $('name').oninput=()=>store('partbench-active',state());
@@ -232,7 +262,7 @@ const notify=value=>$('notice').textContent=value;
 $('preset').onclick=()=>{ids=clean([0,2,4,6,9,10,12,15]);drives=[];$('name').value='Example gaming build';render();notify('Example build loaded.')};
 $('reset').onclick=()=>{ids=clean([]);drives=[];$('name').value='Untitled build';render();notify('Started a new build.')};
 $('save').onclick=()=>{const build=state();library=[build,...library.filter(item=>item.name!==build.name)];store('partbench-library',library);notify('Saved to this browser.')};
-$('saved').onclick=()=>{filter=null;$('modal').className='';$('title').textContent='Saved builds';$('filters').style.display='none'; $('page').replaceChildren();
+$('saved').onclick=()=>{if($('modal').open)$('modal').close();filter=null;$('modal').className='';$('title').textContent='Saved builds';$('filters').style.display='none'; $('page').replaceChildren();
  $('results').replaceChildren(...library.map(item=>button(item.name,()=>{ids=clean(item.ids);drives=cleanDrives(item.drives);$('name').value=item.name;render();$('modal').close()})));
  if(!library.length)$('results').append(node('p','No saved builds yet.'));$('modal').showModal()
 };
