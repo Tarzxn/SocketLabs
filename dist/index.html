@@ -48,11 +48,22 @@ h1{font-weight:620;font-size:clamp(33px,5vw,48px);letter-spacing:-.045em}.panel{
 #model-note{color:var(--muted)}summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--accent)}
 #optional .row{background:none;min-height:0;padding:12px 0;border:0;border-top:1px solid var(--line);border-radius:0}
 .layout aside{position:static}#results small{line-height:1.45}
-</style><header><strong><span class="brand-mark" aria-hidden="true">⌬</span>Socket Labs</strong><button id="saved">Saved builds</button></header><main>
+</style><style>
+dialog.library-open{width:min(1140px,96vw);max-height:94dvh;padding:22px;background:var(--paper)}
+.library-open #library-shell{display:grid;grid-template-columns:190px minmax(0,1fr);gap:20px}
+#library-nav{display:none}.library-open #library-nav{display:flex;flex-direction:column;gap:3px;max-height:68vh;overflow:auto;border-right:1px solid var(--line);padding-right:12px}
+#library-nav button{display:flex;justify-content:space-between;text-align:left;border:0;background:none;font-size:13px}
+#library-nav button.active{background:var(--tint);color:var(--accent)}#library-nav small{font-variant-numeric:tabular-nums;color:var(--muted)}
+.library-main{min-width:0}.library-open #results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:10px;max-height:52vh}
+.library-open #results .row{display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:14px;gap:10px}
+.library-open #results img{width:100%;height:110px;object-fit:contain}.library-open #results button{align-self:start}
+.library-open details{margin-top:9px}.library-open summary{padding:0;font-size:12px}.library-open #filters{gap:8px}
+@media(max-width:680px){.library-open #library-shell{display:block}.library-open #library-nav{flex-direction:row;overflow-x:auto;margin-bottom:12px;border:0}#library-nav button{white-space:nowrap;gap:5px}.library-open #filters>*{width:auto}.library-open #filters input#search{width:100%}.library-open #results{max-height:42vh}header{gap:6px}}
+</style><header><strong><span class="brand-mark" aria-hidden="true">⌬</span>Socket Labs</strong><button id="library">Parts library</button><button id="saved">Saved builds</button></header><main>
 <h1>Build your PC</h1><p>Choose components for your build.</p><div class="layout"><section class="panel"><h2>Components</h2>
 <div class="builder-tools"><div class="build-name"><label for="name">Build name</label><input id="name" value="Untitled build" maxlength="90"></div>
 <div class="actions"><button id="preset">Example build</button><button id="reset">New build</button></div></div>
-<p id="notice" role="status"></p><div id="build"></div><details><summary id="optional-label">Accessories and peripherals</summary><div id="optional"></div></details></section><aside><section class="panel"><h2>Assembly preview</h2><canvas id="assembly" width="560" height="420" aria-label="Rotatable schematic PC assembly"></canvas><div class="preview-tools"><label for="orbit">Rotate</label><input id="orbit" type="range" min="-165" max="165" value="-26"></div><small id="model-note">Choose a component to preview its approximate shape.</small></section><section class="panel"><h2>Build total</h2><div class="amount" id="total"></div><p><span id="price-note"></span></p><div class="actions"><button id="save" class="primary">Save build</button><button id="share">Copy share link</button><button id="export">Export CSV</button></div></section><section class="panel"><h2>Compatibility</h2><ul id="checks"></ul></section></aside></div><footer><a href="https://github.com/docyx/pc-part-dataset/tree/c52a04c">July 2025 PC parts snapshot</a> by docyx, adapted for Socket Labs. Additional catalogue data adapted from <a href="https://github.com/iBlessi/pc-builder-parts">TechFuel HQ PC Builder Parts</a> under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Socket Labs maps the original specs to its picker and compatibility checks.</footer><div class="mobile-total">Build total <strong id="mobile-total"></strong></div></main><dialog id="modal" aria-labelledby="title"><form method="dialog"><button style="float:right">Close</button></form><h2 id="title"></h2><div id="filters" class="actions"><input id="search" placeholder="Search model or spec" aria-label="Search model or spec"><select id="sort" aria-label="Sort parts"><option value="price">Price low to high</option><option value="name">Model name</option></select><label><input type="checkbox" id="compatible"> Hide known conflicts</label></div><div id="results"></div><div class="actions" id="page"></div></dialog><script src="/snapshot.js"></script><script src="/preview.js"></script><script src="/catalogue.js"></script><script>
+<p id="notice" role="status"></p><div id="build"></div><details><summary id="optional-label">Accessories and peripherals</summary><div id="optional"></div></details></section><aside><section class="panel"><h2>Assembly preview</h2><canvas id="assembly" width="560" height="420" aria-label="Rotatable schematic PC assembly"></canvas><div class="preview-tools"><label for="orbit">Rotate</label><input id="orbit" type="range" min="-165" max="165" value="-26"></div><small id="model-note">Choose a component to preview its approximate shape.</small></section><section class="panel"><h2>Build total</h2><div class="amount" id="total"></div><p><span id="price-note"></span></p><div class="actions"><button id="save" class="primary">Save build</button><button id="share">Copy share link</button><button id="export">Export CSV</button></div></section><section class="panel"><h2>Compatibility</h2><ul id="checks"></ul></section></aside></div><footer><a href="https://github.com/docyx/pc-part-dataset/tree/c52a04c">July 2025 PC parts snapshot</a> by docyx, adapted for Socket Labs. Additional catalogue data adapted from <a href="https://github.com/iBlessi/pc-builder-parts">TechFuel HQ PC Builder Parts</a> under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Socket Labs maps the original specs to its picker and compatibility checks.</footer><div class="mobile-total">Build total <strong id="mobile-total"></strong></div></main><dialog id="modal" aria-labelledby="title"><form method="dialog"><button style="float:right">Close</button></form><h2 id="title"></h2><div id="library-shell"><nav id="library-nav" aria-label="Component categories"></nav><div class="library-main"><div id="filters" class="actions"><input id="search" placeholder="Search model or spec" aria-label="Search model or spec"><select id="sort" aria-label="Sort parts"><option value="price">Price low to high</option><option value="name">Model name</option></select><select id="facet" aria-label="Filter specification"></select><label><input type="checkbox" id="model-only"> Blender models</label><label><input type="checkbox" id="compatible"> Hide known conflicts</label></div><div id="results"></div><div class="actions" id="page"></div></div></div></dialog><script src="/snapshot.js"></script><script src="/preview.js"></script><script src="/catalogue.js"></script><script>
 const categories=globalThis.snapshotCategories;
 const rows=[
 [0,'AMD Ryzen 5 7600',170,{socket:'AM5',w:65}], [0,'Intel Core i5-12400F',110,{socket:'LGA1700',w:65}],
@@ -81,6 +92,17 @@ globalThis.snapshotRows.forEach((group,category)=>group.forEach((row,index)=>{
 }));
 delete globalThis.snapshotRows;
 for(const part of parts.values())byCategory[part.category].push(part);
+let modelIds=new Set();
+fetch('/model-index.json').then(response=>response.json()).then(records=>{
+ modelIds=new Set(records.map(String));
+ if(document.getElementById('modal').open&&filter!=null)list();
+}).catch(()=>{});
+const facetKeys=['socket','color','socket','ram','form_factor','chipset','type','modular'];
+function facetValue(part){
+ const key=facetKeys[part.category]??'type';
+ if(part.spec[key]!=null)return String(part.spec[key]);
+ return (part.details??'').split(' · ').find(field=>field.startsWith(key.replaceAll('_',' ')+' '))?.slice(key.length+1)??'';
+}
 const $=id=>document.getElementById(id), money=n=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n);
 const get=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
 const store=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch{}};
@@ -154,12 +176,22 @@ function render(){
 }
 function openPicker(category,index=null){
  filter=category;driveIndex=index;page=0;$('title').textContent=index===null?'Choose '+categories[category]:'Choose storage drive '+(index+2);
- $('filters').style.display='flex'; $('search').value=''; list(); $('modal').showModal(); $('search').focus();
+ $('modal').className='library-open';
+ $('library-nav').replaceChildren(...categories.map((name,i)=>{
+   const tab=button(name,()=>openPicker(i,i===category?index:null));tab.append(node('small',String(byCategory[i].length)));
+   if(i===category)tab.className='active';return tab;
+ }));
+ const options=[...new Set(byCategory[filter].map(facetValue).filter(Boolean))].sort();
+ const label=(facetKeys[filter]??'type').replaceAll('_',' ');
+ $('facet').replaceChildren(...['',...options].map(value=>{const option=node('option',value||'All · '+label);option.value=value;return option}));
+ $('facet').value='';$('facet').hidden=!options.length;
+ $('filters').style.display='flex'; $('search').value=''; list(); if(!$('modal').open)$('modal').showModal(); $('search').focus();
 }
 function list(){
  const terms=$('search').value.toLowerCase().trim().split(/\s+/);
  const matches=byCategory[filter].filter(part=>{
-  if(part.category!==filter)return false;
+  if($('model-only').checked&&!modelIds.has(String(part.id)))return false;
+  if($('facet').value&&facetValue(part)!==$('facet').value)return false;
   const searchable=[part.name,part.details,...Object.values(part.spec)].join(' ').toLowerCase();
   if(!terms.every(term=>searchable.includes(term)))return false;
   const selection=ids.map((id,i)=>i===filter&&driveIndex===null?part.id:id);
@@ -171,9 +203,13 @@ function list(){
  const pageSize=20, start=page*pageSize;
  $('results').replaceChildren(...matches.slice(start,start+pageSize).map(part=>{
    const row=node('div','');row.className='row';
-   const desc=node('div','');desc.append(node('strong',part.name));
+   const desc=node('div','');if(modelIds.has(String(part.id))){
+     const image=document.createElement('img');image.src='/models/'+encodeURIComponent(part.id)+'.webp';image.alt='';image.loading='lazy';desc.append(image);
+   }
+   desc.append(node('strong',part.name));
    const details=part.details||Object.values(part.spec).join(' · ');
-   desc.append(node('small',[details,part.price===null?'Price unavailable':money(part.price)+' sample'].filter(Boolean).join(' · ')));
+   desc.append(node('small',part.price===null?'Price unavailable':money(part.price)+' sample'));
+   if(details){const disclosure=node('details','');disclosure.append(node('summary','Specifications'),node('small',details));desc.append(disclosure)}
    if(typeof part.source==='string'&&part.source.startsWith('https://')){
      const source=node('a','Specifications source');source.href=part.source;source.target='_blank';source.rel='noopener noreferrer';desc.append(node('small',''));
      desc.lastChild.append(source);
@@ -189,13 +225,14 @@ function list(){
  $('page').replaceChildren(node('span',matches.length? (start+1)+'–'+Math.min(start+pageSize,matches.length)+' of '+matches.length+' parts':'0 parts'),prev,next);
 }
 const ruleCategories=[[0,2],[0,1],[2,3],[2,4],[2,6],[5,6],[1,6],[6,7],[5,7]];
-$('search').oninput=$('sort').onchange=$('compatible').onchange=()=>{page=0;list()};
+$('library').onclick=()=>openPicker(0);
+$('facet').onchange=$('model-only').onchange=$('search').oninput=$('sort').onchange=$('compatible').onchange=()=>{page=0;list()};
 $('name').oninput=()=>store('partbench-active',state());
 const notify=value=>$('notice').textContent=value;
 $('preset').onclick=()=>{ids=clean([0,2,4,6,9,10,12,15]);drives=[];$('name').value='Example gaming build';render();notify('Example build loaded.')};
 $('reset').onclick=()=>{ids=clean([]);drives=[];$('name').value='Untitled build';render();notify('Started a new build.')};
 $('save').onclick=()=>{const build=state();library=[build,...library.filter(item=>item.name!==build.name)];store('partbench-library',library);notify('Saved to this browser.')};
-$('saved').onclick=()=>{$('title').textContent='Saved builds';$('filters').style.display='none'; $('page').replaceChildren();
+$('saved').onclick=()=>{filter=null;$('modal').className='';$('title').textContent='Saved builds';$('filters').style.display='none'; $('page').replaceChildren();
  $('results').replaceChildren(...library.map(item=>button(item.name,()=>{ids=clean(item.ids);drives=cleanDrives(item.drives);$('name').value=item.name;render();$('modal').close()})));
  if(!library.length)$('results').append(node('p','No saved builds yet.'));$('modal').showModal()
 };
