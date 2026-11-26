@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: socketlabs
+    runtime: node
+    plan: free
+    buildCommand: node --check server.mjs
+    startCommand: npm start
+    healthCheckPath: /healthz

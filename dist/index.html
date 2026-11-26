@@ -1,0 +1,100 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Socket Labs — PC Builder</title><style>
+*{box-sizing:border-box}body{margin:0;background:#eef3fa;color:#142942;font:15px system-ui}header{background:#102a49;color:white;padding:20px max(5%,20px);display:flex;align-items:center;gap:24px}header strong{font-size:23px;margin-right:auto}button,input,select{font:inherit;border:1px solid #b9cadf;border-radius:7px;padding:9px 12px;background:white;color:#142942}button{cursor:pointer}button:hover{background:#e1ebff}button.primary{background:#155bd0;color:white;border-color:#155bd0}main{max-width:1280px;margin:auto;padding:32px 24px}h1{font-size:38px;margin:0}p{color:#49627e}h2{font-size:19px;margin:0 0 16px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 305px;gap:20px}.panel{background:white;border:1px solid #d3deeb;border-radius:12px;padding:20px;margin-bottom:16px}.row{display:grid;grid-template-columns:135px 1fr auto;gap:12px;align-items:center;border-top:1px solid #e2eaf4;padding:13px 0}.row small{display:block;color:#49627e;margin-top:4px}.actions{display:flex;gap:7px;flex-wrap:wrap}.amount{font-size:32px;font-weight:750;color:#155bd0}.bad{color:#9d3324}.good{color:#167249}dialog{width:min(730px,94vw);border:1px solid #b9cadf;border-radius:14px;padding:24px}dialog::backdrop{background:#102a4994}dialog input{max-width:100%}#results{max-height:55vh;overflow:auto;margin-top:15px}#name{width:100%;margin-bottom:16px}label{display:block;margin-bottom:6px}li{margin-bottom:8px}@media(max-width:760px){.layout{grid-template-columns:1fr}.row{grid-template-columns:1fr auto}.row>strong{grid-column:1/-1}header{gap:8px}main{padding:22px 14px}}
+</style><style>
+body{background:#f5ecdb;color:#2d211a}header{background:#2d211a;color:#fff2de;border-bottom:4px solid #e56c31}button,input,select{border-color:#dac3aa;background:#fff9ed;color:#2d211a}button:hover{background:#ffe4c8}button.primary{background:#ae4416;border-color:#ae4416;color:white}p,.row small{color:#6b5141}.panel{background:#fff9ed;border-color:#e1cbb1}.amount{color:#a84016}.layout{align-items:start}.layout aside{position:sticky;top:16px}#build{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#build .row{display:flex;flex-direction:column;align-items:flex-start;min-height:148px;background:#fbefdc;border:1px solid #ead3b6;border-top:3px solid #de6329;border-radius:8px;padding:14px}#build .row>strong{color:#983c15;font-size:13px;text-transform:uppercase;letter-spacing:.05em}#build .row .actions{margin-top:auto}dialog{background:#fff9ed;color:#2d211a;border-color:#dac3aa}dialog::backdrop{background:#2d211a94}.row{border-color:#ead3b6}.mobile-total{display:none}@media(max-width:760px){.layout aside{position:static}main{padding-bottom:76px}.mobile-total{display:flex;justify-content:space-between;position:fixed;bottom:0;left:0;right:0;padding:15px 20px;background:#2d211a;color:#fff2de;border-top:3px solid #e56c31}.mobile-total strong{color:#ffb485}}@media(max-width:390px){#build{grid-template-columns:1fr}}
+</style><style>h1{font-family:Georgia,serif;font-size:clamp(38px,6vw,64px);color:#883911}.layout{grid-template-columns:minmax(0,1fr) minmax(285px,360px)}.layout aside{max-height:calc(100vh - 32px);overflow:auto}#build{display:block}#build .row{display:grid;grid-template-columns:1fr auto;gap:5px;padding:9px 0;min-height:0;background:none;border:0;border-top:1px solid #ead3b6;border-radius:0}#build .row>strong{grid-column:1/-1}#build .row button{padding:4px 6px;font-size:12px}#cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}.part{border:1px solid #e5ceb0;border-radius:10px;padding:15px;background:#fff5e5;display:grid;gap:10px}.part small{color:#8e461e}.part button{justify-self:start;align-self:end}@media(max-width:760px){.layout{grid-template-columns:1fr}.layout aside{max-height:none;overflow:visible}}</style><header><strong>Socket Labs</strong><button id="browse">Browse parts</button><button id="saved">Saved builds</button></header><main><h1>Curate your build</h1><p>Explore components, check compatibility, and compare sample prices in GBP.</p><div class="layout"><section class="panel catalogue"><h2>Parts catalogue</h2><div class="actions"><select id="category" aria-label="Part category"></select><input id="catalog-search" aria-label="Search catalogue" placeholder="Search parts"></div><div id="cards"></div></section><aside><section class="panel"><h2>Your build</h2><label for="name">Build name</label><input id="name" value="Untitled build" maxlength="90"><div class="actions"><button id="preset">Example build</button><button id="reset">New build</button><button id="optimize">Find lowest-cost checked build</button></div><p id="notice" role="status"></p><div id="build"></div></section><section class="panel"><h2>Build total</h2><div class="amount" id="total"></div><p>Illustrative prices · UK · GBP</p><p id="power"></p><div class="actions"><button id="save" class="primary">Save build</button><button id="share">Copy share link</button><button id="export">Export CSV</button></div></section><section class="panel"><h2>Compatibility</h2><ul id="checks"></ul></section></aside></div><div class="mobile-total">Build total <strong id="mobile-total"></strong></div></main><dialog id="modal"><form method="dialog"><button style="float:right">Close</button></form><h2 id="title"></h2><div id="filters" class="actions"><input id="search" placeholder="Search model or spec" aria-label="Search model or spec"><select id="sort" aria-label="Sort parts"><option value="price">Price low to high</option><option value="name">Model name</option></select><label><input type="checkbox" id="compatible"> Hide known conflicts</label></div><div id="results"></div></dialog><script>
+const categories=['CPU','Cooler','Motherboard','Memory','Storage','Graphics card','Case','Power supply'];
+const rows=[
+[0,'AMD Ryzen 5 7600',170,{socket:'AM5',w:65}], [0,'Intel Core i5-12400F',110,{socket:'LGA1700',w:65}],
+[1,'Thermalright Peerless Assassin 120 SE',33,{sockets:['AM5','LGA1700'],height:155}], [1,'Noctua NH-D15',90,{sockets:['AM5','LGA1700'],height:165}],
+[2,'MSI PRO B650M-A WIFI',139,{socket:'AM5',ram:'DDR5',form:'mATX',m2:true}], [2,'MSI PRO B660M-A DDR4',105,{socket:'LGA1700',ram:'DDR4',form:'mATX',m2:true}],
+[3,'Corsair Vengeance 32 GB DDR5-6000',95,{ram:'DDR5'}],[3,'Corsair Vengeance LPX 32 GB DDR4-3200',53,{ram:'DDR4'}],
+[4,'Samsung 990 PRO 2 TB',145,{m2:true}], [4,'WD Black SN770 1 TB',65,{m2:true}],
+[5,'Sapphire Pulse Radeon RX 7600',240,{length:240,w:165,minPsu:550}], [5,'ASUS Dual GeForce RTX 4060 OC',275,{length:227.2,w:115,minPsu:550}],
+[6,'Fractal Design Pop Mini Air',78,{forms:['mATX','Mini-ITX'],gpu:365,cooler:170,psu:'ATX'}],[6,'Fractal Design North',120,{forms:['ATX','mATX','Mini-ITX'],gpu:355,cooler:170,psu:'ATX'}],
+[7,'Corsair CX450',42,{w:450,form:'ATX'}],[7,'Corsair RM650e 650 W',75,{w:650,form:'ATX'}]];
+const parts=rows.map(([category,name,price,spec],id)=>({id,category,name,price,spec}));
+const $=id=>document.getElementById(id), money=n=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n);
+const get=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
+const store=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch{}};
+const clean=ids=>categories.map((_,i)=>Number.isInteger(ids?.[i])&&parts[ids[i]]?.category===i?ids[i]:null);
+let active=get('partbench-active',{}), library=get('partbench-library',[]), filter=null;
+try{if(location.hash)active=JSON.parse(decodeURIComponent(location.hash.slice(1)))}catch{}
+let ids=clean(active?.ids); $('name').value=typeof active?.name==='string'?active.name:'Untitled build';
+function checks(selection){
+ const [cpu,cool,board,ram,ssd,gpu,box,psu]=selection.map(id=>parts[id]?.spec);
+ return [
+ [cpu&&board,cpu?.socket===board?.socket,'CPU and motherboard socket'],
+ [cpu&&cool,cool?.sockets.includes(cpu?.socket),'Cooler socket support'],
+ [board&&ram,board?.ram===ram?.ram,'Motherboard and memory type'],
+ [board&&ssd,board?.m2&&ssd?.m2,'M.2 storage support'],
+ [board&&box,box?.forms.includes(board?.form),'Motherboard fits case'],
+ [gpu&&box,gpu?.length<=box?.gpu,'GPU length clearance'],
+ [cool&&box,cool?.height<=box?.cooler,'Cooler height clearance'],
+ [box&&psu,box?.psu===psu?.form,'Power supply form factor'],
+ [gpu&&psu,psu?.w>=gpu?.minPsu,'GPU recommended PSU capacity']];
+}
+function state(){return {name:$('name').value.trim()||'Untitled build',ids:[...ids]}}
+function total(selection){return selection.reduce((sum,id)=>sum+(parts[id]?.price??0),0)}
+function node(tag,value){const element=document.createElement(tag);element.textContent=value;return element}
+function button(label,action){const element=node('button',label);element.onclick=action;return element}
+function render(){
+ $('build').replaceChildren(); categories.forEach((category,i)=>{
+ const row=node('div','');row.className='row';const part=parts[ids[i]],desc=node('div',part?.name??'Choose a part');
+ if(part)desc.append(node('small',money(part.price)+' sample'));
+ const actions=node('div','');actions.className='actions';actions.append(button(part?'Change':'Select',()=>openPicker(i)));
+ if(part)actions.append(button('Remove',()=>{ids[i]=null;render()}));
+ row.append(node('strong',category),desc,actions);$('build').append(row);
+ });
+ $('total').textContent=money(total(ids)); document.getElementById('mobile-total').textContent=money(total(ids)); const cpu=parts[ids[0]],gpu=parts[ids[5]];
+ $('power').textContent=cpu||gpu?'CPU + GPU published power ratings: '+((cpu?.spec.w??0)+(gpu?.spec.w??0))+' W. Whole-system draw varies.':'Add a CPU or GPU to see its power rating.';
+ $('checks').replaceChildren(...checks(ids).map(([ready,pass,label])=>{const item=node('li',label+' · '+(ready?(pass?'Pass':'Conflict'):'Pending'));item.className=ready?(pass?'good':'bad'):'';return item}));
+ store('partbench-active',state()); catalogue();
+}
+function openPicker(category){
+ filter=category;$('title').textContent=category===null?'Parts catalogue':categories[category];$('filters').hidden=false;$('filters').style.display='flex';$('search').value='';list();$('modal').showModal();
+}
+function list(){
+ const query=$('search').value.trim().toLowerCase();
+ const matches=parts.filter(p=>(filter===null||p.category===filter)&&(p.name+' '+Object.values(p.spec).join(' ')).toLowerCase().includes(query)&&(!$('compatible').checked||!checks(ids.map((id,i)=>i===p.category?p.id:id)).some(([ready,pass])=>ready&&!pass)));
+ matches.sort((a,b)=>$('sort').value==='name'?a.name.localeCompare(b.name):a.price-b.price);
+ $('results').replaceChildren(...matches.map(p=>{const row=node('div','');row.className='row';
+ const description=node('div',p.name);description.append(node('small',Object.entries(p.spec).map(([key,value])=>key+' '+value).join(' · ')));
+ row.append(node('strong',categories[p.category]),description,button('Add · '+money(p.price),()=>{ids[p.category]=p.id;$('modal').close();render()}));return row}));
+ if(!matches.length)$('results').append(node('p','No matching parts.'));
+}
+$('browse').onclick=()=>openPicker(null);$('search').oninput=list;$('sort').onchange=list;$('compatible').onchange=list;
+$('name').oninput=()=>store('partbench-active',state()); catalogue();
+const notify=value=>$('notice').textContent=value;
+$('preset').onclick=()=>{ids=[0,2,4,6,9,10,12,15];$('name').value='Example gaming build';render();notify('Example build loaded.')};
+$('reset').onclick=()=>{ids=clean([]);$('name').value='Untitled build';render();notify('Started a new build.')};
+$('optimize').onclick=()=>{
+ let candidates=[[]];categories.forEach((_,i)=>{candidates=candidates.flatMap(items=>parts.filter(p=>p.category===i).map(p=>[...items,p.id]))});
+ const best=candidates.filter(items=>checks(items).every(([ready,pass])=>ready&&pass)).sort((a,b)=>total(a)-total(b))[0];
+ if(best){ids=best;$('name').value='Lowest-cost sample build';render();notify('Loaded the lowest-cost combination that passes the listed checks.')}
+};
+$('save').onclick=()=>{const build=state();library=[build,...library.filter(item=>item.name!==build.name)];store('partbench-library',library);notify('Saved to this browser.')};
+$('saved').onclick=()=>{$('title').textContent='Saved builds';$('filters').style.display='none';
+ $('results').replaceChildren(...library.map(item=>button(item.name,()=>{ids=clean(item.ids);$('name').value=item.name;render();$('modal').close()})));
+ if(!library.length)$('results').append(node('p','No saved builds yet.'));$('modal').showModal()
+};
+$('share').onclick=async()=>{const url=location.href.split('#')[0]+'#'+encodeURIComponent(JSON.stringify(state()));try{await navigator.clipboard.writeText(url);notify('Share link copied.')}catch{window.prompt('Copy build link',url)}};
+$('export').onclick=()=>{const lines=['Category,Part,Sample price GBP',...ids.flatMap((id,i)=>parts[id]?[categories[i]+','+parts[id].name+','+parts[id].price]:[])];const url=URL.createObjectURL(new Blob([lines.join('\r\n')],{type:'text/csv'}));const a=document.createElement('a');a.href=url;a.download='socketlabs-build.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+function catalogue(){
+const query=document.getElementById('catalog-search').value.trim().toLowerCase();
+const cat=document.getElementById('category').value;
+const matches=parts.filter(p=>(cat===''||Number(cat)===p.category)&&(p.name+' '+Object.values(p.spec).join(' ')).toLowerCase().includes(query));
+document.getElementById('cards').replaceChildren(...matches.map(p=>{
+const card=node('article','');card.className='part';
+const add=button(ids[p.category]===p.id?'Selected':'Add · '+money(p.price),()=>{ids[p.category]=p.id;render()});add.className='primary';add.disabled=ids[p.category]===p.id;
+card.append(node('small',categories[p.category]),node('strong',p.name),node('small',Object.values(p.spec).join(' · ')),add);return card;
+}));
+if(!matches.length)document.getElementById('cards').append(node('p','No matching parts.'));
+}
+const category=document.getElementById('category');
+category.append(new Option('All categories',''),...categories.map((name,i)=>new Option(name,i)));
+category.onchange=catalogue;document.getElementById('catalog-search').oninput=catalogue;
+render();
+</script></html>
+
+
