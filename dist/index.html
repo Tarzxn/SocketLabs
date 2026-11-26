@@ -9,11 +9,42 @@ h1{font-family:Georgia,serif;font-size:clamp(36px,6vw,62px);color:#883911}.layou
 #results .row{grid-template-columns:minmax(0,1fr) auto}#results{max-height:54vh}#results small{overflow-wrap:anywhere}
 footer{margin-top:20px;color:#6b5141;font-size:13px}a{color:#963911}#page{margin-top:10px;align-items:center}
 @media(max-width:600px){#build .row{grid-template-columns:minmax(0,1fr) auto}#build .row>strong{grid-column:1/-1}}
-</style><header><strong>Socket Labs</strong><button id="saved">Saved builds</button></header><main>
+</style><style>
+:root{color-scheme:light;--paper:#faf6ee;--surface:#fffcf6;--ink:#30231b;--muted:#705b4e;--line:#e8dac9;--accent:#a13f1e;--tint:#f7e6d8}
+body{background:var(--paper);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,sans-serif}
+header{background:var(--paper);color:var(--ink);border-bottom:1px solid var(--line);padding:14px max(22px,calc((100vw - 1120px)/2));white-space:nowrap}
+header strong{display:flex;align-items:center;gap:10px;letter-spacing:-.035em}
+.brand-mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--accent);color:#fff9ef;font-size:18px}
+main{max-width:1168px;padding-top:45px}h1{color:var(--ink);font-weight:500;letter-spacing:-.055em;line-height:1.05}main>p{margin:12px 0 29px}h2{letter-spacing:-.02em}
+.layout{grid-template-columns:minmax(0,1fr) 300px;gap:22px}.layout aside{position:sticky;top:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:0 3px 18px #59301406}
+.builder-tools{display:flex;align-items:end;gap:14px;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}.build-name{flex:1;min-width:165px}.build-name label{font-size:12px;color:var(--muted)}#name{margin:0}
+button,input,select{border:1px solid var(--line);border-radius:9px;background:var(--surface);padding:8px 11px;color:var(--ink)}
+button{font-weight:600;transition:background .16s,border-color .16s,color .16s}button:hover{background:var(--tint);border-color:#dfb89e}
+button.primary{background:var(--accent);border-color:var(--accent);color:white}button.primary:hover{background:#833413}button:disabled{opacity:.55;cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#notice{margin:0 0 12px}#notice:empty{display:none}
+#build .row{grid-template-columns:135px minmax(0,1fr) auto;border-top-color:var(--line);padding:15px 0}
+#build .row>strong{font-size:14px;text-transform:none;letter-spacing:0;color:var(--ink)}
+#build .row button{padding:7px 9px;font-size:13px}
+#build .row .empty{color:var(--muted)}
+#build .extra-drive>strong{padding-left:11px;font-size:12px;color:var(--muted)}
+.amount{color:var(--accent);letter-spacing:-.045em}p,.row small{color:var(--muted)}
+#checks{margin:0;padding:0;list-style:none}#checks li{display:flex;justify-content:space-between;align-items:start;gap:8px;margin:0;padding:8px 0;border-top:1px solid var(--line);font-size:13px}
+.status{font-size:11px;font-weight:650;border-radius:20px;padding:2px 7px;background:#eee7de;color:#675648;white-space:nowrap}
+.status.pass{color:#236344;background:#e8f2e7}.status.conflict{color:#962e1f;background:#fce3dc}.status.unknown{color:#795410;background:#f9efd4}
+dialog{width:min(760px,calc(100% - 28px));max-height:calc(100dvh - 28px);padding:22px;border-radius:19px;background:var(--surface);border-color:var(--line);box-shadow:0 20px 95px #30231b36}
+dialog[open]{animation:appear .18s ease-out}dialog::backdrop{background:#30231b66}
+@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+#filters{align-items:center;gap:10px}#filters label{margin:0}#search{flex:1;min-width:180px}#results .row{border-top-color:var(--line)}#page{justify-content:flex-end}#page span:first-child{margin-right:auto;color:var(--muted);font-size:13px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.layout aside{position:static}.mobile-total{background:var(--surface);color:var(--ink);border-top:1px solid var(--line)}.mobile-total strong{color:var(--accent)}main{padding-top:27px}}
+@media(max-width:560px){#build .row{grid-template-columns:minmax(0,1fr) auto}#build .row>strong{grid-column:1/-1}#build .row .actions{justify-content:flex-end}.panel{padding:15px}#filters>*{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style><header><strong><span class="brand-mark" aria-hidden="true">⌬</span>Socket Labs</strong><button id="saved">Saved builds</button></header><main>
 <h1>Build your PC</h1><p>Choose parts one component at a time.</p><div class="layout"><section class="panel"><h2>Components</h2>
-<label for="name">Build name</label><input id="name" value="Untitled build" maxlength="90">
-<div class="actions"><button id="preset">Example build</button><button id="reset">New build</button></div>
-<p id="notice" role="status"></p><div id="build"></div></section><aside><section class="panel"><h2>Build total</h2><div class="amount" id="total"></div><p><span id="price-note"></span></p><p id="power"></p><div class="actions"><button id="save" class="primary">Save build</button><button id="share">Copy share link</button><button id="export">Export CSV</button></div></section><section class="panel"><h2>Compatibility</h2><ul id="checks"></ul></section></aside></div><footer>Catalogue data adapted from <a href="https://github.com/iBlessi/pc-builder-parts">TechFuel HQ PC Builder Parts</a> under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Socket Labs maps the original specs to its picker and compatibility checks.</footer><div class="mobile-total">Build total <strong id="mobile-total"></strong></div></main><dialog id="modal"><form method="dialog"><button style="float:right">Close</button></form><h2 id="title"></h2><div id="filters" class="actions"><input id="search" placeholder="Search model or spec" aria-label="Search model or spec"><select id="sort" aria-label="Sort parts"><option value="price">Price low to high</option><option value="name">Model name</option></select><label><input type="checkbox" id="compatible"> Hide known conflicts</label></div><div id="results"></div><div class="actions" id="page"></div></dialog><script src="/catalogue.js"></script><script>
+<div class="builder-tools"><div class="build-name"><label for="name">Build name</label><input id="name" value="Untitled build" maxlength="90"></div>
+<div class="actions"><button id="preset">Example build</button><button id="reset">New build</button></div></div>
+<p id="notice" role="status"></p><div id="build"></div></section><aside><section class="panel"><h2>Build total</h2><div class="amount" id="total"></div><p><span id="price-note"></span></p><div class="actions"><button id="save" class="primary">Save build</button><button id="share">Copy share link</button><button id="export">Export CSV</button></div></section><section class="panel"><h2>Compatibility</h2><ul id="checks"></ul></section></aside></div><footer>Catalogue data adapted from <a href="https://github.com/iBlessi/pc-builder-parts">TechFuel HQ PC Builder Parts</a> under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Socket Labs maps the original specs to its picker and compatibility checks.</footer><div class="mobile-total">Build total <strong id="mobile-total"></strong></div></main><dialog id="modal" aria-labelledby="title"><form method="dialog"><button style="float:right">Close</button></form><h2 id="title"></h2><div id="filters" class="actions"><input id="search" placeholder="Search model or spec" aria-label="Search model or spec"><select id="sort" aria-label="Sort parts"><option value="price">Price low to high</option><option value="name">Model name</option></select><label><input type="checkbox" id="compatible"> Hide known conflicts</label></div><div id="results"></div><div class="actions" id="page"></div></dialog><script src="/catalogue.js"></script><script>
 const categories=['CPU','CPU cooler','Motherboard','Memory','Storage','Graphics card','Case','Power supply'];
 const rows=[
 [0,'AMD Ryzen 5 7600',170,{socket:'AM5',w:65}], [0,'Intel Core i5-12400F',110,{socket:'LGA1700',w:65}],
@@ -31,19 +62,24 @@ const store=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}ca
 const clean=ids=>categories.map((_,i)=>parts.get(ids?.[i])?.category===i?ids[i]:null);
 let active=get('partbench-active',{}), library=get('partbench-library',[]), filter=null, page=0;
 try{if(location.hash)active=JSON.parse(decodeURIComponent(location.hash.slice(1)))}catch{}
-let ids=clean(active?.ids); $('name').value=typeof active?.name==='string'?active.name:'Untitled build';
-function checks(selection){
+const cleanDrives = values => Array.isArray(values) ? values.slice(0,24).filter(id=>parts.get(id)?.category===4) : [];
+let ids=clean(active?.ids), drives=cleanDrives(active?.drives), driveIndex=null; $('name').value=typeof active?.name==='string'?active.name:'Untitled build';
+function checks(selection, extras=drives){
  const [cpu,cool,board,ram,ssd,gpu,box,psu]=selection.map(id=>parts.get(id)?.spec);
  const output=[];
  function check(a,b,x,y,test,label){
-  const known=x!==undefined&&y!==undefined;
+  const known=x!=null&&y!=null;
   output.push([a&&b?(known?(test(x,y)?'Pass':'Conflict'):'Unknown'):'Pending',label]);
  }
  const equals=(a,b)=>a===b, includes=(a,b)=>a.includes(b), fits=(a,b)=>a<=b;
  check(cpu,board,cpu?.socket,board?.socket,equals,'CPU and motherboard socket');
  check(cpu,cool,cool?.sockets,cpu?.socket,includes,'Cooler socket support');
  check(board,ram,board?.ram,ram?.ram,equals,'Motherboard and memory type');
- check(board,ssd,board?.m2,ssd?.m2,equals,'M.2 storage support');
+ const storage=[ssd,...extras.map(id=>parts.get(id)?.spec)].filter(Boolean);
+ const m2Count=storage.filter(drive=>drive.m2===true).length;
+ const slots=board?.m2Slots??(board?.m2===false?0:undefined);
+ check(board,storage.length,m2Count,slots??(m2Count===1&&board?.m2?1:undefined),fits,'M.2 slots');
+ if(storage.some(drive=>drive.m2!==true)&&output.at(-1)[0]==='Pass')output.at(-1)[0]='Unknown';
  check(board,box,box?.forms,board?.form,includes,'Motherboard fits case');
  check(gpu,box,gpu?.length,box?.gpu,fits,'GPU length clearance');
  check(cool,box,cool?.height,box?.cooler,fits,'Cooler height clearance');
@@ -51,31 +87,46 @@ function checks(selection){
  check(gpu,psu,gpu?.minPsu,psu?.w,fits,'GPU recommended PSU capacity');
  return output;
 }
-function state(){return {name:$('name').value.trim()||'Untitled build',ids:[...ids]}}
+function state(){return {name:$('name').value.trim()||'Untitled build',ids:[...ids],drives:[...drives]}}
 function total(selection){return selection.reduce((sum,id)=>sum+(parts.get(id)?.price??0),0)}
 function node(tag,value){const element=document.createElement(tag);element.textContent=value;return element}
 function button(label,action){const element=node('button',label);element.onclick=action;return element}
 function render(){
  $('build').replaceChildren(); categories.forEach((category,i)=>{
- const row=node('div','');row.className='row';const part=parts.get(ids[i]),desc=node('div',part?.name??'Choose a part');
+ const row=node('div','');row.className='row';const part=parts.get(ids[i]),desc=node('div',part?.name??'No part selected');
+ if(!part)desc.className='empty';
  if(part)desc.append(node('small',part.price===null?'Price unavailable':money(part.price)+' sample'));
- const actions=node('div','');actions.className='actions';actions.append(button(part?'Change':'Choose '+category,()=>openPicker(i)));
- if(part)actions.append(button('Remove',()=>{ids[i]=null;render()}));
+ const actions=node('div','');actions.className='actions';const choose=button(part?'Change':'Choose '+category,()=>openPicker(i));
+ if(!part)choose.className='primary';actions.append(choose);
+ if(part)actions.append(button('Remove',()=>{ids[i]=i===4?(drives.shift()??null):null;render()}));
  row.append(node('strong',category),desc,actions);$('build').append(row);
+ if(i===4&&part){
+   drives.forEach((id,index)=>{
+     const extra=parts.get(id), drive=node('div',''), controls=node('div','');
+     drive.className='row extra-drive';controls.className='actions';
+     controls.append(button('Change',()=>openPicker(4,index)),button('Remove',()=>{drives.splice(index,1);render()}));
+     drive.append(node('strong','Drive '+(index+2)),node('div',extra.name),controls);
+     $('build').append(drive);
+   });
+   if(drives.length<24){
+     const more=node('div','');more.className='row extra-drive';
+     more.append(node('strong','Additional storage'),node('span',''),button('Add drive',()=>openPicker(4,drives.length)));
+     $('build').append(more);
+   }
+ }
  });
- const selected=ids.map(id=>parts.get(id)).filter(Boolean);
+ const selected=[...ids,...drives].map(id=>parts.get(id)).filter(Boolean);
  const priced=selected.filter(part=>part.price!==null);
- const amount=priced.length?money(total(ids)):'—';
+ const amount=priced.length?money(total([...ids,...drives])):'—';
  $('total').textContent=amount; $('mobile-total').textContent=amount;
  $('price-note').textContent=priced.length+' of '+selected.length+' selected parts have illustrative GBP prices.';
- $('power').textContent='Compatibility checks depend on available specifications.';
  $('checks').replaceChildren(...checks(ids).map(([status,label])=>{
-   const item=node('li',label+' · '+status);item.className=status==='Pass'?'good':status==='Conflict'?'bad':'';return item;
+   const item=node('li',''), badge=node('span',status);badge.className='status '+status.toLowerCase();item.append(node('span',label),badge);return item;
  }));
  store('partbench-active',state());
 }
-function openPicker(category){
- filter=category; page=0; $('title').textContent='Choose '+categories[category];
+function openPicker(category,index=null){
+ filter=category;driveIndex=index;page=0;$('title').textContent=index===null?'Choose '+categories[category]:'Choose storage drive '+(index+2);
  $('filters').style.display='flex'; $('search').value=''; list(); $('modal').showModal(); $('search').focus();
 }
 function list(){
@@ -84,8 +135,9 @@ function list(){
   if(part.category!==filter)return false;
   const searchable=[part.name,part.details,...Object.values(part.spec)].join(' ').toLowerCase();
   if(!terms.every(term=>searchable.includes(term)))return false;
-  const selection=ids.map((id,i)=>i===filter?part.id:id);
-  return !$('compatible').checked||!checks(selection).some(([status],i)=>status==='Conflict'&&ruleCategories[i].includes(filter));
+  const selection=ids.map((id,i)=>i===filter&&driveIndex===null?part.id:id);
+  const extras=[...drives]; if(driveIndex!==null)extras[driveIndex]=part.id;
+  return !$('compatible').checked||!checks(selection,extras).some(([status],i)=>status==='Conflict'&&ruleCategories[i].includes(filter));
  });
  const byName=(a,b)=>a.name.localeCompare(b.name);
  matches.sort($('sort').value==='price'?(a,b)=>(a.price??Infinity)-(b.price??Infinity)||byName(a,b):byName);
@@ -99,8 +151,9 @@ function list(){
      const source=node('a','Specifications source');source.href=part.source;source.target='_blank';source.rel='noopener noreferrer';desc.append(node('small',''));
      desc.lastChild.append(source);
    }
-   const add=button(ids[filter]===part.id?'Selected':'Add',()=>{ids[filter]=part.id;$('modal').close();render()});
-   add.disabled=ids[filter]===part.id;row.append(desc,add);return row;
+   const selected=(driveIndex===null?ids[filter]:drives[driveIndex])===part.id;
+   const add=button(selected?'Selected':'Add',()=>{if(driveIndex===null)ids[filter]=part.id;else drives[driveIndex]=part.id;$('modal').close();render()});
+   add.className='primary'; add.disabled=selected;row.append(desc,add);return row;
  }));
  $('results').scrollTop=0;
  if(!matches.length)$('results').append(node('p','No matching parts.'));
@@ -112,24 +165,24 @@ const ruleCategories=[[0,2],[0,1],[2,3],[2,4],[2,6],[5,6],[1,6],[6,7],[5,7]];
 $('search').oninput=$('sort').onchange=$('compatible').onchange=()=>{page=0;list()};
 $('name').oninput=()=>store('partbench-active',state());
 const notify=value=>$('notice').textContent=value;
-$('preset').onclick=()=>{ids=[0,2,4,6,9,10,12,15];$('name').value='Example gaming build';render();notify('Example build loaded.')};
-$('reset').onclick=()=>{ids=clean([]);$('name').value='Untitled build';render();notify('Started a new build.')};
+$('preset').onclick=()=>{ids=[0,2,4,6,9,10,12,15];drives=[];$('name').value='Example gaming build';render();notify('Example build loaded.')};
+$('reset').onclick=()=>{ids=clean([]);drives=[];$('name').value='Untitled build';render();notify('Started a new build.')};
 $('save').onclick=()=>{const build=state();library=[build,...library.filter(item=>item.name!==build.name)];store('partbench-library',library);notify('Saved to this browser.')};
 $('saved').onclick=()=>{$('title').textContent='Saved builds';$('filters').style.display='none'; $('page').replaceChildren();
- $('results').replaceChildren(...library.map(item=>button(item.name,()=>{ids=clean(item.ids);$('name').value=item.name;render();$('modal').close()})));
+ $('results').replaceChildren(...library.map(item=>button(item.name,()=>{ids=clean(item.ids);drives=cleanDrives(item.drives);$('name').value=item.name;render();$('modal').close()})));
  if(!library.length)$('results').append(node('p','No saved builds yet.'));$('modal').showModal()
 };
 $('share').onclick=async()=>{const url=location.href.split('#')[0]+'#'+encodeURIComponent(JSON.stringify(state()));try{await navigator.clipboard.writeText(url);notify('Share link copied.')}catch{window.prompt('Copy build link',url)}};
 $('export').onclick=()=>{
  const quote=value=>'"'+String(value??'').replaceAll('"','""')+'"';
- const lines=[['Category','Part','Sample price GBP'],...ids.flatMap((id,i)=>{
-   const part=parts.get(id);return part?[[categories[i],part.name,part.price]]:[];
+ const lines=[['Category','Part','Sample price GBP'],...[...ids,...drives].flatMap((id,i)=>{
+   const part=parts.get(id);return part?[[categories[i]??'Storage',part.name,part.price]]:[];
  })].map(line=>line.map(quote).join(','));
  const url=URL.createObjectURL(new Blob([lines.join('\r\n')],{type:'text/csv'}));
  const a=document.createElement('a');a.href=url;a.download='socketlabs-build.csv';a.click();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 };
-$('sort').value='name';
+$('sort').value='name';$('compatible').checked=true;
 render();
 </script></html>
 

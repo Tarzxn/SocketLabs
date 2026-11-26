@@ -362,7 +362,8 @@ globalThis.importedCatalogue = [
       "socket": "AM5",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 3
     },
     "details": "AM5 · B650 · DDR5 · ATX"
   },
@@ -375,7 +376,8 @@ globalThis.importedCatalogue = [
       "socket": "AM5",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 4
     },
     "details": "AM5 · B850 · DDR5 · ATX"
   },
@@ -388,7 +390,8 @@ globalThis.importedCatalogue = [
       "socket": "AM5",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 5
     },
     "details": "AM5 · X870E · DDR5 · ATX"
   },
@@ -401,7 +404,8 @@ globalThis.importedCatalogue = [
       "socket": "LGA1851",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 4
     },
     "details": "LGA1851 · Z890 · DDR5 · ATX"
   },
@@ -414,7 +418,8 @@ globalThis.importedCatalogue = [
       "socket": "LGA1700",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 4
     },
     "details": "LGA1700 · Z790 · DDR5 · ATX"
   },
@@ -427,7 +432,8 @@ globalThis.importedCatalogue = [
       "socket": "AM5",
       "ram": "DDR5",
       "form": "mATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 2
     },
     "source": "https://www.asrock.com/mb/AMD/A620AM-X/index.asp",
     "details": "AM5 · AMD A620A · DDR5 · Micro-ATX"
@@ -441,7 +447,8 @@ globalThis.importedCatalogue = [
       "socket": "LGA1851",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 3
     },
     "source": "https://www.asrock.com/mb/Intel/B860%20Pro%20RS/index.asp",
     "details": "LGA1851 · Intel B860 · DDR5 · ATX"
@@ -455,7 +462,8 @@ globalThis.importedCatalogue = [
       "socket": "LGA1851",
       "ram": "DDR5",
       "form": "mATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 2
     },
     "source": "https://www.asrock.com/mb/Intel/B860M-X%20Gen5%20WiFi/index.asp",
     "details": "LGA1851 · Intel B860 · DDR5 · Micro-ATX"
@@ -469,7 +477,8 @@ globalThis.importedCatalogue = [
       "socket": "LGA1851",
       "ram": "DDR5",
       "form": "Mini-ITX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 2
     },
     "source": "https://www.asrock.com/mb/Intel/B860I%20WiFi/index.asp",
     "details": "LGA1851 · Intel B860 · DDR5 · Mini-ITX"
@@ -483,7 +492,8 @@ globalThis.importedCatalogue = [
       "socket": "LGA1851",
       "ram": "DDR5",
       "form": "Mini-ITX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 2
     },
     "source": "https://rog.asus.com/motherboards/rog-strix/rog-strix-b860-i-gaming-wifi/spec/",
     "details": "LGA1851 · Intel B860 · DDR5 · Mini-ITX"
@@ -497,7 +507,8 @@ globalThis.importedCatalogue = [
       "socket": "LGA1851",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 2
     },
     "source": "https://www.asus.com/motherboards-components/motherboards/prime/prime-b860-plus-wifi-csm/techspec/",
     "details": "LGA1851 · Intel B860 · DDR5 · ATX"
@@ -511,7 +522,8 @@ globalThis.importedCatalogue = [
       "socket": "LGA1851",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 4
     },
     "source": "https://www.asus.com/motherboards-components/motherboards/prime/prime-z890-p-wifi/techspec/",
     "details": "LGA1851 · Intel Z890 · DDR5 · ATX"
@@ -525,7 +537,8 @@ globalThis.importedCatalogue = [
       "socket": "AM5",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 4
     },
     "source": "https://www.asus.com/motherboards-components/motherboards/tuf-gaming/tuf-gaming-x870-plus-wifi/techspec/",
     "details": "AM5 · AMD X870 · DDR5 · ATX"
@@ -539,7 +552,8 @@ globalThis.importedCatalogue = [
       "socket": "AM5",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 3
     },
     "source": "https://www.asus.com/motherboards-components/motherboards/tuf-gaming/tuf-gaming-b850-plus-wifi/techspec/",
     "details": "AM5 · AMD B850 · DDR5 · ATX"
@@ -553,7 +567,8 @@ globalThis.importedCatalogue = [
       "socket": "AM5",
       "ram": "DDR5",
       "form": "Mini-ITX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 2
     },
     "source": "https://rog.asus.com/motherboards/rog-strix/rog-strix-b850-i-gaming-wifi/spec/",
     "details": "AM5 · AMD B850 · DDR5 · Mini-ITX"
@@ -567,7 +582,8 @@ globalThis.importedCatalogue = [
       "socket": "AM5",
       "ram": "DDR5",
       "form": "ATX",
-      "m2": true
+      "m2": true,
+      "m2Slots": 3
     },
     "source": "https://rog.asus.com/motherboards/rog-strix/rog-strix-b650-a-gaming-wifi-model/spec/",
     "details": "AM5 · AMD B650 · DDR5 · ATX"
